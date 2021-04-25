@@ -1,3 +1,3 @@
-package ["php7.4","php7.4-mysql"] do
+package ["php7.2","php7.2-mysql"] do
     action :install
   end
