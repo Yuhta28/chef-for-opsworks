@@ -1,4 +1,4 @@
-remote_file "/tmp" do
+remote_file "/tmp/" do
     source "https://ja.wordpress.org/latest-ja.tar.gz"
     owner "root"
     group "root"
