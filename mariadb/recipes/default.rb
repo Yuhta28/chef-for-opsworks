@@ -1,4 +1,4 @@
-package "mariadb-server" do
+package ["mariadb-server","mariadb-client]" do
   action :install
 end
 
