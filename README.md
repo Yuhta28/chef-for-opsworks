@@ -1,1 +1,2 @@
 # chef-for-opsworks
+AWS OpsWorksでWordPress構築をできるようにするためのChefのレシピ格納場所
