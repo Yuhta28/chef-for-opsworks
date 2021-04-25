@@ -1,6 +1,4 @@
-package "mariadb" do
-  retries 3
-  retry_delay 5
+package "mariadb-server" do
   action :install
 end
 
