@@ -17,19 +17,13 @@
 # limitations under the License.
 #
 
-package 'apache2' do
-  package_name value_for_platform_family(:rhel => "httpd", :ubuntu => "apache2")
+package "apache2" do
   retries 3
   retry_delay 5
   action :install
 end
 
-include_recipe 'apache2::service'
 
-service 'apache2' do
-  service_name value_for_platform_family(
-    'rhel' => 'httpd',
-    'ubuntu' => 'apache2'
-  )
-  action :enable
+service "apache2" do
+  action [ :enable, :start]
 end
