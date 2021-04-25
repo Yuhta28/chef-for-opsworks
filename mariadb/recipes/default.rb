@@ -10,3 +10,7 @@ end
 template "create.sql" do
   source "create.sql.erb"
 end
+
+bash "apply schema" do
+  code "sudo mysql < create.sql"
+end
