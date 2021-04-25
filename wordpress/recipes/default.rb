@@ -11,7 +11,7 @@ script "install_wordpress" do
     cwd "/tmp"
     code <<-EOH
       tar xvf latest-ja.tar.gz
-      cp wordpress /var/www/html/
+      mv wordpress /var/www/html/
       chown -R www-data:www-data /var/www/html/wordpress
     EOH
 end
