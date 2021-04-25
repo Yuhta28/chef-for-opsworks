@@ -1,29 +1,39 @@
-#
-# Cookbook Name:: apache2
-# Recipe:: default
-#
-# Copyright 2008, OpsCode, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+apache2_install 'default'
 
-package "apache2" do
-  retries 3
-  retry_delay 5
-  action :install
+service 'apache2' do
+  service_name lazy { apache_platform_service_name }
+  supports restart: true, status: true, reload: true
+  action [:start, :enable]
 end
 
+apache2_module 'deflate'
+apache2_module 'headers'
 
-service "apache2" do
-  action [ :enable, :start]
+app_dir = '/var/www/basic_site'
+
+directory app_dir do
+  recursive true
+end
+
+file "#{app_dir}/index.html" do
+  content 'Hello World'
+  owner   lazy { default_apache_user }
+  group   lazy { default_apache_group }
+end
+
+template 'basic_site' do
+  source 'basic_site.conf.erb'
+  path "#{apache_dir}/sites-available/basic_site.conf"
+  variables(
+    server_name: '127.0.0.1',
+    document_root: app_dir,
+    log_dir: lazy { default_log_dir },
+    site_name: 'basic_site'
+  )
+end
+
+apache2_site 'basic_site'
+
+apache2_site '000-default' do
+  action :disable
 end
